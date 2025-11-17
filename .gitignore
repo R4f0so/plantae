@@ -1,0 +1,49 @@
+# Dependencies
+node_modules/
+.pnp
+.pnp.js
+
+# Environment
+.env
+.env.local
+.env.*.local
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# OS
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+
+# IDEs
+.vscode/
+.idea/
+*.swp
+*.swo
+*.sublime-*
+
+# Build
+dist/
+build/
+.expo/
+.expo-shared/
+
+# Docker
+docker-compose.override.yml
+
+# Testing
+coverage/
+.nyc_output
+
+# Production
+*.tgz
+
+# Misc
+.cache
+temp/
+tmp/
