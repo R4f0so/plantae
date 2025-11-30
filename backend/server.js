@@ -8,6 +8,8 @@ import redisClient from './src/config/redis.js';
 import authRoutes from './src/routes/authRoutes.js';
 import hortaRoutes from './src/routes/hortaRoutes.js';
 import produtoRoutes from './src/routes/produtoRoutes.js';
+import swaggerUi from 'swagger-ui-express';
+import swaggerSpec from './src/config/swagger.js';
 
 dotenv.config();
 
@@ -35,6 +37,86 @@ const limiter = rateLimit({
 });
 
 app.use('/api/', limiter);
+
+// ==================== DOCUMENTAÇÃO (SWAGGER) ====================
+
+/**
+ * @swagger
+ * /:
+ *   get:
+ *     tags: [Sistema]
+ *     summary: Informações da API
+ *     description: Retorna informações básicas sobre a API
+ *     responses:
+ *       200:
+ *         description: Informações da API
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 app:
+ *                   type: string
+ *                 message:
+ *                   type: string
+ *                 status:
+ *                   type: string
+ *                 version:
+ *                   type: string
+ *                 environment:
+ *                   type: string
+ *                 timestamp:
+ *                   type: string
+ */
+
+/**
+ * @swagger
+ * /health:
+ *   get:
+ *     tags: [Sistema]
+ *     summary: Health check
+ *     description: Verifica o status da API e suas dependências
+ *     responses:
+ *       200:
+ *         description: Sistema saudável
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 status:
+ *                   type: string
+ *                   example: healthy
+ *                 services:
+ *                   type: object
+ *                   properties:
+ *                     database:
+ *                       type: string
+ *                       example: connected
+ *                     redis:
+ *                       type: string
+ *                       example: connected
+ *                 uptime:
+ *                   type: number
+ *                 timestamp:
+ *                   type: string
+ *       503:
+ *         description: Sistema com problemas
+ */
+
+// Swagger UI
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec, {
+  customCss: '.swagger-ui .topbar { display: none }',
+  customSiteTitle: 'Plantae API - Documentação',
+}));
+
+// JSON da especificação OpenAPI
+app.get('/api-docs.json', (req, res) => {
+  res.setHeader('Content-Type', 'application/json');
+  res.send(swaggerSpec);
+});
+
+console.log(`📚 Documentação: http://localhost:${PORT}/api-docs`);
 
 // ==================== ROTAS ====================
 

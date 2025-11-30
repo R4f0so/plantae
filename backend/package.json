@@ -6,28 +6,36 @@
   "type": "module",
   "scripts": {
     "start": "node server.js",
-    "dev": "nodemon server.js"
+    "dev": "nodemon server.js",
+    "db:migrate": "node src/database/migrate.js",
+    "db:seed": "node src/database/seed.js"
   },
   "keywords": [
     "plantae",
     "hortas",
-    "osasco"
+    "osasco",
+    "api",
+    "rest"
   ],
-  "author": "",
+  "author": "Rafael Ferreira Martins",
   "license": "MIT",
   "dependencies": {
-    "bcryptjs": "^2.4.3",
+    "bcryptjs": "^3.0.3",
     "cors": "^2.8.5",
-    "dotenv": "^16.4.7",
-    "express": "^4.21.2",
-    "express-rate-limit": "^7.5.0",
-    "helmet": "^8.0.0",
-    "joi": "^17.13.3",
+    "dotenv": "^17.2.3",
+    "express": "^5.1.0",
+    "express-rate-limit": "^8.2.1",
+    "helmet": "^8.1.0",
+    "joi": "^18.0.1",
     "jsonwebtoken": "^9.0.2",
-    "pg": "^8.13.1",
-    "redis": "^4.7.0"
+    "pg": "^8.16.3",
+    "redis": "^5.9.0"
   },
   "devDependencies": {
-    "nodemon": "^3.1.9"
+    "nodemon": "^3.1.11"
+  },
+  "engines": {
+    "node": ">=18.0.0",
+    "npm": ">=9.0.0"
   }
 }
