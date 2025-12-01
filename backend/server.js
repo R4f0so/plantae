@@ -3,15 +3,21 @@ import cors from 'cors';
 import helmet from 'helmet';
 import dotenv from 'dotenv';
 import rateLimit from 'express-rate-limit';
+import path from 'path';
+import { fileURLToPath } from 'url';
 import pool from './src/config/database.js';
 import redisClient from './src/config/redis.js';
 import authRoutes from './src/routes/authRoutes.js';
 import hortaRoutes from './src/routes/hortaRoutes.js';
 import produtoRoutes from './src/routes/produtoRoutes.js';
+import uploadRoutes from './src/routes/uploadRoutes.js';
 import swaggerUi from 'swagger-ui-express';
 import swaggerSpec from './src/config/swagger.js';
 
 dotenv.config();
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -26,6 +32,9 @@ app.use(cors({
 // Middlewares para parsing
 app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ extended: true, limit: '10mb' }));
+
+// Servir arquivos estáticos (uploads)
+app.use('/uploads', express.static(path.join(__dirname, 'public/uploads')));
 
 // Rate limiting
 const limiter = rateLimit({
@@ -116,8 +125,6 @@ app.get('/api-docs.json', (req, res) => {
   res.send(swaggerSpec);
 });
 
-console.log(`📚 Documentação: http://localhost:${PORT}/api-docs`);
-
 // ==================== ROTAS ====================
 
 // Rotas de autenticação
@@ -128,6 +135,9 @@ app.use('/api/hortas', hortaRoutes);
 
 // Rotas de produtos
 app.use('/api/produtos', produtoRoutes);
+
+// Rotas de upload
+app.use('/api/upload', uploadRoutes);
 
 app.get('/', (req, res) => {
   res.json({ 
@@ -193,6 +203,7 @@ app.listen(PORT, () => {
   console.log(`🚀 Servidor: http://localhost:${PORT}`);
   console.log(`📍 Ambiente: ${process.env.NODE_ENV}`);
   console.log(`📊 Health: http://localhost:${PORT}/health`);
+  console.log(`📚 Documentação: http://localhost:${PORT}/api-docs`);
   console.log('========================================\n');
 });
 

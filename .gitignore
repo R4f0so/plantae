@@ -47,3 +47,10 @@ coverage/
 .cache
 temp/
 tmp/
+
+# Uploads (não versionar imagens enviadas)
+backend/public/uploads/*
+!backend/public/uploads/.gitkeep
+!backend/public/uploads/users/.gitkeep
+!backend/public/uploads/hortas/.gitkeep
+!backend/public/uploads/produtos/.gitkeep
