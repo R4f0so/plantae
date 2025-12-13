@@ -6,8 +6,9 @@ import {
   ActivityIndicator,
   TouchableOpacity,
   Alert,
+  Platform,
 } from 'react-native';
-import MapView, { Marker, PROVIDER_GOOGLE } from 'react-native-maps';
+import MapView, { Marker, Callout, PROVIDER_GOOGLE } from 'react-native-maps';
 import * as Location from 'expo-location';
 import api from '../services/api';
 
@@ -233,5 +234,35 @@ const styles = StyleSheet.create({
     color: '#fff',
     fontSize: 16,
     fontWeight: 'bold',
+  },
+  // Estilos do Callout
+  calloutContainer: {
+    backgroundColor: '#fff',
+    borderRadius: 12,
+    padding: 12,
+    minWidth: 180,
+    maxWidth: 250,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
+    elevation: 5,
+  },
+  calloutTitle: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    color: '#2d6a4f',
+    marginBottom: 4,
+  },
+  calloutAddress: {
+    fontSize: 13,
+    color: '#666',
+    marginBottom: 8,
+  },
+  calloutHint: {
+    fontSize: 12,
+    color: '#2d6a4f',
+    fontWeight: '600',
+    textAlign: 'right',
   },
 });

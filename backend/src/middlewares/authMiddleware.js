@@ -51,3 +51,36 @@ export const authorize = (...allowedTypes) => {
     next();
   };
 };
+
+// Alias para compatibilidade
+export const authMiddleware = authenticate;
+
+// Middleware específico para admin
+export const adminMiddleware = (req, res, next) => {
+  if (!req.user) {
+    return res.status(401).json({ error: 'Não autenticado' });
+  }
+
+  if (req.user.tipo !== 'admin') {
+    return res.status(403).json({ 
+      error: 'Acesso restrito a administradores' 
+    });
+  }
+
+  next();
+};
+
+// Middleware específico para gerenciadores e admins
+export const gerenciadorMiddleware = (req, res, next) => {
+  if (!req.user) {
+    return res.status(401).json({ error: 'Não autenticado' });
+  }
+
+  if (req.user.tipo !== 'gerenciador' && req.user.tipo !== 'admin') {
+    return res.status(403).json({ 
+      error: 'Acesso restrito a gerenciadores' 
+    });
+  }
+
+  next();
+};

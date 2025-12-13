@@ -10,6 +10,7 @@ import {
   ActivityIndicator,
 } from 'react-native';
 import api from '../services/api';
+import UserMenu from '../components/UserMenu';
 
 export default function HomeScreen({ navigation }) {
   const [hortas, setHortas] = useState([]);
@@ -90,12 +91,7 @@ export default function HomeScreen({ navigation }) {
           <Text style={styles.headerTitle}>🌱 Hortas Comunitárias</Text>
           <Text style={styles.headerSubtitle}>Osasco - SP</Text>
         </View>
-        <TouchableOpacity
-          style={styles.mapButton}
-          onPress={() => navigation.navigate('Map')}
-        >
-          <Text style={styles.mapButtonText}>🗺️</Text>
-        </TouchableOpacity>
+        <UserMenu navigation={navigation} />
       </View>
 
       <FlatList
@@ -228,16 +224,5 @@ const styles = StyleSheet.create({
   emptySubtitle: {
     fontSize: 14,
     color: '#666',
-  },
-  mapButton: {
-    backgroundColor: 'rgba(255, 255, 255, 0.2)',
-    width: 45,
-    height: 45,
-    borderRadius: 23,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  mapButtonText: {
-    fontSize: 24,
   },
 });

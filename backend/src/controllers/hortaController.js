@@ -1,4 +1,5 @@
 import Horta from '../models/Horta.js';
+import HorarioFuncionamento from '../models/HorarioFuncionamento.js';
 
 class HortaController {
   // Criar horta (apenas gerenciador ou admin)
@@ -56,7 +57,7 @@ class HortaController {
     }
   }
 
-  // Buscar horta por ID
+  // Buscar horta por ID (com horários e status)
   static async getById(req, res) {
     try {
       const { id } = req.params;
@@ -67,10 +68,51 @@ class HortaController {
         return res.status(404).json({ error: 'Horta não encontrada' });
       }
 
-      res.json({ horta });
+      // Buscar horários de funcionamento
+      const horarios = await HorarioFuncionamento.findByHortaId(id);
+      
+      // Verificar se está aberta agora
+      const statusAbertura = await HorarioFuncionamento.isAbertaAgora(id);
+
+      res.json({ 
+        horta: {
+          ...horta,
+          horarios,
+          aberta_agora: statusAbertura.aberta,
+          proxima_abertura: statusAbertura.proxima_abertura,
+        }
+      });
     } catch (error) {
       console.error('Erro ao buscar horta:', error);
       res.status(500).json({ error: 'Erro ao buscar horta' });
+    }
+  }
+
+  // Listar hortas do gerenciador logado
+  static async minhasHortas(req, res) {
+    try {
+      const gerenciadorId = req.user.id;
+
+      const hortas = await Horta.findByGerenciador(gerenciadorId);
+
+      // Para cada horta, buscar status de abertura
+      const hortasComStatus = await Promise.all(
+        hortas.map(async (horta) => {
+          const statusAbertura = await HorarioFuncionamento.isAbertaAgora(horta.id);
+          return {
+            ...horta,
+            aberta_agora: statusAbertura.aberta,
+          };
+        })
+      );
+
+      res.json({
+        total: hortasComStatus.length,
+        hortas: hortasComStatus,
+      });
+    } catch (error) {
+      console.error('Erro ao buscar hortas do gerenciador:', error);
+      res.status(500).json({ error: 'Erro ao buscar suas hortas' });
     }
   }
 

@@ -1,0 +1,8 @@
+# Render Build Configuration
+# https://render.com/docs/deploy-node-express-app
+
+# Build Command
+# npm install
+
+# Start Command  
+# npm start

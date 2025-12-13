@@ -165,6 +165,34 @@ router.get('/nearby', HortaController.nearby);
  *       500:
  *         description: Erro interno do servidor
  */
+/**
+ * @swagger
+ * /api/hortas/minhas:
+ *   get:
+ *     tags: [Hortas]
+ *     summary: Listar minhas hortas (gerenciador)
+ *     description: Retorna todas as hortas que o usuário logado gerencia
+ *     security:
+ *       - bearerAuth: []
+ *     responses:
+ *       200:
+ *         description: Lista de hortas do gerenciador
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 total:
+ *                   type: integer
+ *                 hortas:
+ *                   type: array
+ *                   items:
+ *                     $ref: '#/components/schemas/Horta'
+ *       401:
+ *         description: Não autorizado
+ */
+router.get('/minhas', authenticate, authorize('gerenciador', 'admin'), HortaController.minhasHortas);
+
 router.get('/:id', HortaController.getById);
 
 // ==================== ROTAS PROTEGIDAS ====================

@@ -1,0 +1,1 @@
+﻿UPDATE usuarios SET senha_hash = '$2b$10$VmSWopyd8jNErqN.v0KPl.I2F8Q/2WhPQ0peudkLISndmfQVdR7iW' WHERE id = 2;

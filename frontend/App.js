@@ -9,6 +9,15 @@ import LoginScreen from './src/screens/LoginScreen';
 import RegisterScreen from './src/screens/RegisterScreen';
 import HomeScreen from './src/screens/HomeScreen';
 import MapScreen from './src/screens/MapScreen';
+import HortaDetailScreen from './src/screens/HortaDetailScreen';
+import ProfileScreen from './src/screens/ProfileScreen';
+import SettingsScreen from './src/screens/SettingsScreen';
+import GerenciadorScreen from './src/screens/GerenciadorScreen';
+import EditarHorariosScreen from './src/screens/EditarHorariosScreen';
+import EditarStatusScreen from './src/screens/EditarStatusScreen';
+import AdminScreen from './src/screens/AdminScreen';
+import AdminUsuariosScreen from './src/screens/AdminUsuariosScreen';
+import AdminHortasScreen from './src/screens/AdminHortasScreen';
 
 const Stack = createStackNavigator();
 
@@ -47,6 +56,61 @@ function Routes() {
           <Stack.Screen 
             name="Map" 
             component={MapScreen}
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen 
+            name="HortaDetail" 
+            component={HortaDetailScreen}
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen 
+            name="Profile" 
+            component={ProfileScreen}
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen 
+            name="Settings" 
+            component={SettingsScreen}
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen 
+            name="Gerenciador" 
+            component={GerenciadorScreen}
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen 
+            name="EditarHorarios" 
+            component={EditarHorariosScreen}
+            options={{ 
+              headerShown: true,
+              title: 'Horários de Funcionamento',
+              headerStyle: { backgroundColor: '#2d6a4f' },
+              headerTintColor: '#fff',
+            }}
+          />
+          <Stack.Screen 
+            name="EditarStatus" 
+            component={EditarStatusScreen}
+            options={{ 
+              headerShown: true,
+              title: 'Status Temporário',
+              headerStyle: { backgroundColor: '#2d6a4f' },
+              headerTintColor: '#fff',
+            }}
+          />
+          <Stack.Screen 
+            name="Admin" 
+            component={AdminScreen}
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen 
+            name="AdminUsuarios" 
+            component={AdminUsuariosScreen}
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen 
+            name="AdminHortas" 
+            component={AdminHortasScreen}
             options={{ headerShown: false }}
           />
         </>

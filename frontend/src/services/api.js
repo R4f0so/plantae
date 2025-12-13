@@ -1,16 +1,28 @@
 import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { Platform } from 'react-native';
 
-// URL da API - ALTERE para seu IP local se testar em dispositivo físico
-// Para descobrir seu IP: rode 'ipconfig' no PowerShell e use o IPv4
-const API_URL = 'http://localhost:3000/api';
-// const API_URL = 'http://192.168.1.X:3000/api'; // Use seu IP para testar no celular
+// Detecta automaticamente a URL correta
+const getApiUrl = () => {
+  // Web: usa localhost
+  if (Platform.OS === 'web') {
+    return 'http://localhost:3000/api';
+  }
+  
+  // Mobile: usa localtunnel (URL pública temporária)
+  // IMPORTANTE: Esta URL muda cada vez que você reinicia o localtunnel
+  // Você pode ver a URL atual no terminal onde rodou: npx localtunnel --port 3000
+  return 'https://ripe-geese-serve.loca.lt/api';
+};
+
+const API_URL = getApiUrl();
 
 const api = axios.create({
   baseURL: API_URL,
   timeout: 10000,
   headers: {
     'Content-Type': 'application/json',
+    'bypass-tunnel-reminder': 'true', // Necessário para localtunnel
   },
 });
 

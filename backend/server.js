@@ -9,8 +9,10 @@ import pool from './src/config/database.js';
 import redisClient from './src/config/redis.js';
 import authRoutes from './src/routes/authRoutes.js';
 import hortaRoutes from './src/routes/hortaRoutes.js';
+import horarioRoutes from './src/routes/horarioRoutes.js';
 import produtoRoutes from './src/routes/produtoRoutes.js';
 import uploadRoutes from './src/routes/uploadRoutes.js';
+import adminRoutes from './src/routes/adminRoutes.js';
 import swaggerUi from 'swagger-ui-express';
 import swaggerSpec from './src/config/swagger.js';
 
@@ -25,8 +27,8 @@ const PORT = process.env.PORT || 3000;
 // Middlewares de segurança
 app.use(helmet());
 app.use(cors({
-  origin: process.env.CLIENT_URL,
-  credentials: true,
+  origin: process.env.CLIENT_URL === '*' ? '*' : process.env.CLIENT_URL,
+  credentials: process.env.CLIENT_URL !== '*',
 }));
 
 // Middlewares para parsing
@@ -133,11 +135,17 @@ app.use('/api/auth', authRoutes);
 // Rotas de hortas
 app.use('/api/hortas', hortaRoutes);
 
+// Rotas de horários (sub-rotas de hortas)
+app.use('/api/hortas', horarioRoutes);
+
 // Rotas de produtos
 app.use('/api/produtos', produtoRoutes);
 
 // Rotas de upload
 app.use('/api/upload', uploadRoutes);
+
+// Rotas de administração (somente admin)
+app.use('/api/admin', adminRoutes);
 
 app.get('/', (req, res) => {
   res.json({ 
