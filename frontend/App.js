@@ -8,6 +8,7 @@ import { ActivityIndicator, View } from 'react-native';
 import LoginScreen from './src/screens/LoginScreen';
 import RegisterScreen from './src/screens/RegisterScreen';
 import HomeScreen from './src/screens/HomeScreen';
+import MapScreen from './src/screens/MapScreen';
 
 const Stack = createStackNavigator();
 
@@ -41,6 +42,11 @@ function Routes() {
           <Stack.Screen 
             name="Home" 
             component={HomeScreen}
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen 
+            name="Map" 
+            component={MapScreen}
             options={{ headerShown: false }}
           />
         </>

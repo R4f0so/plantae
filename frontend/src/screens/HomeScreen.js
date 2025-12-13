@@ -86,8 +86,16 @@ export default function HomeScreen({ navigation }) {
   return (
     <View style={styles.container}>
       <View style={styles.header}>
-        <Text style={styles.headerTitle}>🌱 Hortas Comunitárias</Text>
-        <Text style={styles.headerSubtitle}>Osasco - SP</Text>
+        <View>
+          <Text style={styles.headerTitle}>🌱 Hortas Comunitárias</Text>
+          <Text style={styles.headerSubtitle}>Osasco - SP</Text>
+        </View>
+        <TouchableOpacity
+          style={styles.mapButton}
+          onPress={() => navigation.navigate('Map')}
+        >
+          <Text style={styles.mapButtonText}>🗺️</Text>
+        </TouchableOpacity>
       </View>
 
       <FlatList
@@ -136,6 +144,9 @@ const styles = StyleSheet.create({
     padding: 20,
     paddingTop: 50,
     paddingBottom: 20,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
   },
   headerTitle: {
     fontSize: 24,
@@ -217,5 +228,16 @@ const styles = StyleSheet.create({
   emptySubtitle: {
     fontSize: 14,
     color: '#666',
+  },
+  mapButton: {
+    backgroundColor: 'rgba(255, 255, 255, 0.2)',
+    width: 45,
+    height: 45,
+    borderRadius: 23,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  mapButtonText: {
+    fontSize: 24,
   },
 });
