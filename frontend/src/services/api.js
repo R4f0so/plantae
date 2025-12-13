@@ -2,17 +2,16 @@ import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Platform } from 'react-native';
 
-// Detecta automaticamente a URL correta
+// URL da API em produção (Render)
+const PRODUCTION_URL = 'https://plantae-xop0.onrender.com/api';
+const LOCAL_URL = 'http://localhost:3000/api';
+
+// Usar produção por padrão, localhost para desenvolvimento web
 const getApiUrl = () => {
-  // Web: usa localhost
-  if (Platform.OS === 'web') {
-    return 'http://localhost:3000/api';
-  }
+  // Para desenvolvimento local no web, descomente a linha abaixo:
+  // if (Platform.OS === 'web') return LOCAL_URL;
   
-  // Mobile: usa localtunnel (URL pública temporária)
-  // IMPORTANTE: Esta URL muda cada vez que você reinicia o localtunnel
-  // Você pode ver a URL atual no terminal onde rodou: npx localtunnel --port 3000
-  return 'https://ripe-geese-serve.loca.lt/api';
+  return PRODUCTION_URL;
 };
 
 const API_URL = getApiUrl();
