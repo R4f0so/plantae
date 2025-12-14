@@ -105,7 +105,7 @@ class Horta {
       FROM hortas h
       LEFT JOIN usuarios u ON h.gerenciador_id = u.id
       WHERE h.ativo = $1
-      ORDER BY h.criado_em DESC
+      ORDER BY horta_aberta_agora(h.id) DESC, h.nome ASC
     `;
     
     const result = await pool.query(query, [ativo]);
