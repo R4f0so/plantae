@@ -97,6 +97,8 @@ class Horta {
         h.horario_funcionamento,
         h.foto_capa,
         h.ativo,
+        h.status_temporario,
+        h.mensagem_status,
         h.criado_em,
         h.atualizado_em,
         horta_aberta_agora(h.id) as aberta_agora
@@ -130,8 +132,11 @@ class Horta {
         h.horario_funcionamento,
         h.foto_capa,
         h.ativo,
+        h.status_temporario,
+        h.mensagem_status,
         h.criado_em,
-        h.atualizado_em
+        h.atualizado_em,
+        horta_aberta_agora(h.id) as aberta_agora
       FROM hortas h
       LEFT JOIN usuarios u ON h.gerenciador_id = u.id
       WHERE h.id = $1
@@ -340,8 +345,11 @@ class Horta {
         h.horario_funcionamento,
         h.foto_capa,
         h.ativo,
+        h.status_temporario,
+        h.mensagem_status,
         h.criado_em,
-        h.atualizado_em
+        h.atualizado_em,
+        horta_aberta_agora(h.id) as aberta_agora
       FROM hortas h
       WHERE h.gerenciador_id = $1
       ORDER BY h.nome

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useCallback } from 'react';
 import {
   View,
   Text,
@@ -9,6 +9,7 @@ import {
   RefreshControl,
   ActivityIndicator,
 } from 'react-native';
+import { useFocusEffect } from '@react-navigation/native';
 import api from '../services/api';
 import UserMenu from '../components/UserMenu';
 
@@ -17,9 +18,12 @@ export default function HomeScreen({ navigation }) {
   const [loading, setLoading] = useState(true);
   const [refreshing, setRefreshing] = useState(false);
 
-  useEffect(() => {
-    loadHortas();
-  }, []);
+  // Atualiza os dados quando a tela recebe foco
+  useFocusEffect(
+    useCallback(() => {
+      loadHortas();
+    }, [])
+  );
 
   async function loadHortas() {
     try {
@@ -61,6 +65,17 @@ export default function HomeScreen({ navigation }) {
             {item.aberta_agora ? '🟢 Aberta' : '🔴 Fechada'}
           </Text>
         </View>
+        
+        {/* Status temporário (férias, manutenção, etc) */}
+        {item.status_temporario && item.status_temporario !== 'normal' && (
+          <View style={styles.statusTemporarioBadge}>
+            <Text style={styles.statusTemporarioText}>
+              {item.status_temporario === 'ferias' ? '🏖️ Férias' : 
+               item.status_temporario === 'manutencao' ? '🔧 Manutenção' : 
+               '🚫 Fech. Temp.'}
+            </Text>
+          </View>
+        )}
         
         <View style={styles.cardContent}>
           <Text style={styles.cardTitle} numberOfLines={2}>
@@ -202,6 +217,20 @@ const styles = StyleSheet.create({
   statusText: {
     color: '#fff',
     fontSize: 12,
+    fontWeight: 'bold',
+  },
+  statusTemporarioBadge: {
+    position: 'absolute',
+    top: 45,
+    right: 10,
+    paddingHorizontal: 8,
+    paddingVertical: 4,
+    borderRadius: 10,
+    backgroundColor: '#f77f00',
+  },
+  statusTemporarioText: {
+    color: '#fff',
+    fontSize: 10,
     fontWeight: 'bold',
   },
   cardContent: {

@@ -15,6 +15,8 @@ import SettingsScreen from './src/screens/SettingsScreen';
 import GerenciadorScreen from './src/screens/GerenciadorScreen';
 import EditarHorariosScreen from './src/screens/EditarHorariosScreen';
 import EditarStatusScreen from './src/screens/EditarStatusScreen';
+import EditarHortaScreen from './src/screens/EditarHortaScreen';
+import GerenciarProdutosScreen from './src/screens/GerenciarProdutosScreen';
 import AdminScreen from './src/screens/AdminScreen';
 import AdminUsuariosScreen from './src/screens/AdminUsuariosScreen';
 import AdminHortasScreen from './src/screens/AdminHortasScreen';
@@ -97,6 +99,16 @@ function Routes() {
               headerStyle: { backgroundColor: '#2d6a4f' },
               headerTintColor: '#fff',
             }}
+          />
+          <Stack.Screen 
+            name="EditarHorta" 
+            component={EditarHortaScreen}
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen 
+            name="GerenciarProdutos" 
+            component={GerenciarProdutosScreen}
+            options={{ headerShown: false }}
           />
           <Stack.Screen 
             name="Admin" 

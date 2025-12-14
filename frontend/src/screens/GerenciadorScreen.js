@@ -9,6 +9,7 @@ import {
   ActivityIndicator,
   Alert,
 } from 'react-native';
+import { useFocusEffect } from '@react-navigation/native';
 import { useAuth } from '../contexts/AuthContext';
 import api from '../services/api';
 
@@ -39,9 +40,22 @@ export default function GerenciadorScreen({ navigation }) {
   const fetchMinhasHortas = useCallback(async () => {
     try {
       const response = await api.get('/hortas/minhas');
-      setHortas(response.data.hortas);
-      if (response.data.hortas.length > 0 && !selectedHorta) {
-        setSelectedHorta(response.data.hortas[0]);
+      const hortasData = response.data.hortas;
+      setHortas(hortasData);
+      
+      // Atualiza selectedHorta com dados novos ou seleciona a primeira
+      if (hortasData.length > 0) {
+        if (selectedHorta) {
+          // Encontra a horta selecionada nos novos dados para atualizar
+          const updatedSelected = hortasData.find(h => h.id === selectedHorta.id);
+          if (updatedSelected) {
+            setSelectedHorta(updatedSelected);
+          } else {
+            setSelectedHorta(hortasData[0]);
+          }
+        } else {
+          setSelectedHorta(hortasData[0]);
+        }
       }
     } catch (error) {
       console.error('Erro ao buscar hortas:', error);
@@ -52,9 +66,12 @@ export default function GerenciadorScreen({ navigation }) {
     }
   }, [selectedHorta]);
 
-  useEffect(() => {
-    fetchMinhasHortas();
-  }, []);
+  // Atualiza os dados quando a tela recebe foco (ex: voltando de outra tela)
+  useFocusEffect(
+    useCallback(() => {
+      fetchMinhasHortas();
+    }, [])
+  );
 
   const onRefresh = useCallback(() => {
     setRefreshing(true);

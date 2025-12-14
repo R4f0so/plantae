@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useCallback } from 'react';
 import {
   View,
   Text,
@@ -10,6 +10,7 @@ import {
   Linking,
   Platform,
 } from 'react-native';
+import { useFocusEffect } from '@react-navigation/native';
 import api from '../services/api';
 
 export default function HortaDetailScreen({ route, navigation }) {
@@ -18,10 +19,13 @@ export default function HortaDetailScreen({ route, navigation }) {
   const [produtos, setProdutos] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    loadHortaDetails();
-    loadProdutos();
-  }, []);
+  // Atualiza os dados quando a tela recebe foco
+  useFocusEffect(
+    useCallback(() => {
+      loadHortaDetails();
+      loadProdutos();
+    }, [hortaId])
+  );
 
   async function loadHortaDetails() {
     try {
