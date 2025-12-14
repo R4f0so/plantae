@@ -98,10 +98,10 @@ class HortaController {
       // Para cada horta, buscar status de abertura
       const hortasComStatus = await Promise.all(
         hortas.map(async (horta) => {
-          const statusAbertura = await HorarioFuncionamento.isAbertaAgora(horta.id);
+          const abertaAgora = await HorarioFuncionamento.isAbertaAgora(horta.id);
           return {
             ...horta,
-            aberta_agora: statusAbertura.aberta,
+            aberta_agora: abertaAgora,
           };
         })
       );

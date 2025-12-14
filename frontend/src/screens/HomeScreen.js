@@ -52,6 +52,16 @@ export default function HomeScreen({ navigation }) {
           </View>
         )}
         
+        {/* Indicador de status aberto/fechado */}
+        <View style={[
+          styles.statusBadge, 
+          { backgroundColor: item.aberta_agora ? '#2d6a4f' : '#d62828' }
+        ]}>
+          <Text style={styles.statusText}>
+            {item.aberta_agora ? '🟢 Aberta' : '🔴 Fechada'}
+          </Text>
+        </View>
+        
         <View style={styles.cardContent}>
           <Text style={styles.cardTitle} numberOfLines={2}>
             {item.nome}
@@ -180,6 +190,19 @@ const styles = StyleSheet.create({
   },
   placeholderText: {
     fontSize: 60,
+  },
+  statusBadge: {
+    position: 'absolute',
+    top: 10,
+    right: 10,
+    paddingHorizontal: 10,
+    paddingVertical: 5,
+    borderRadius: 12,
+  },
+  statusText: {
+    color: '#fff',
+    fontSize: 12,
+    fontWeight: 'bold',
   },
   cardContent: {
     padding: 16,
