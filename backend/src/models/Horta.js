@@ -98,7 +98,8 @@ class Horta {
         h.foto_capa,
         h.ativo,
         h.criado_em,
-        h.atualizado_em
+        h.atualizado_em,
+        horta_aberta_agora(h.id) as aberta_agora
       FROM hortas h
       LEFT JOIN usuarios u ON h.gerenciador_id = u.id
       WHERE h.ativo = $1
